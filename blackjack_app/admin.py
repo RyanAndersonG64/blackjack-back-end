@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app_auth.models import *
+from blackjack_app.models import *
 
 class ProfileAdmin(admin.ModelAdmin):
   pass

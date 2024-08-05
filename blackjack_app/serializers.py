@@ -9,5 +9,14 @@ class UserSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
   class Meta:
     model = Profile
-    fields = ['id', 'first_name', 'last_name']
+    fields = '__all__'
 
+class CardSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Card
+    fields = '__all__'
+
+class DeckSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Deck
+    fields = '__all__'
