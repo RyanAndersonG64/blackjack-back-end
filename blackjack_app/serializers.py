@@ -17,6 +17,8 @@ class CardSerializer(serializers.ModelSerializer):
     fields = '__all__'
 
 class DeckSerializer(serializers.ModelSerializer):
+  cards = CardSerializer(many=True)
+
   class Meta:
     model = Deck
     fields = '__all__'

@@ -2,10 +2,12 @@
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework import viewsets
 
 from .models import *
 from .serializers import *
 
+import random
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -33,3 +35,28 @@ def create_user(request):
   profile_serialized = ProfileSerializer(profile)
   return Response(profile_serialized.data)
 
+class DeckViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Deck.objects.all()
+    serializer_class = DeckSerializer
+
+    def list(self, request):
+        num_decks = int(request.query_params.get('num_decks', 1))
+        decks = Deck.objects.all()[:num_decks]
+        serializer = self.get_serializer(decks, many=True)
+        return Response(serializer.data)
+    
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_decks(request):
+
+   cards = []
+   decks = int(request.query_params.get('deck_number', 1))
+
+   for i in range(decks):
+      deck = Deck.objects.get(pk = 1)
+      cards.extend(deck.cards.all())
+
+   random.shuffle(cards)
+
+   cards_serialized = CardSerializer(cards, many = True)
+   return Response(cards_serialized.data)

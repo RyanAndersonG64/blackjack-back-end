@@ -12,10 +12,13 @@ from rest_framework import routers
 from blackjack_app.views import *
 
 router = routers.DefaultRouter()
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('profile/', get_profile),
+    path('refresh/', TokenRefreshView.as_view()),
     path('token/', TokenObtainPairView.as_view()),
-    path('create-user/', create_user)
+    path('get-profile/', get_profile),
+    path('create-user/', create_user),
+    path('decks/', DeckViewSet.as_view({'get': 'list'})),
+    path('get-decks/', get_decks),
 ]

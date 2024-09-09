@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt.token_blacklist',
-    'blackjack_app'
+    'blackjack_app',
 ]
 
 MIDDLEWARE = [
