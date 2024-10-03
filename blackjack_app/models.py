@@ -1,10 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Image(models.Model):
+    image = models.ImageField(null=True, blank=True, upload_to='images/')
+    title = models.CharField(max_length=20, null=True, blank=True)
+
+    def __str__(self):
+       return f'{self.title}'
+
 class Card(models.Model):
     value = models.CharField(max_length=2, null=True, blank=True)
     suit = models.CharField(max_length=10, null=True, blank=True)
-    image = models.URLField(null=True, blank=True)
+    image = models.ForeignKey(Image, on_delete = models.SET(''), null=True, blank=True)
 
     def __str__(self):
         return f"{self.value} of {self.suit}"
@@ -24,7 +31,7 @@ class Profile (models.Model):
     return self.user.username
 
 values = {'2' : 2, '3': 3, '4': 4, '5' : 5, '6' : 6, '7' : 7, '8' : 8, '9' : 9, '10' : 10, 'J' : 10, 'Q' : 10, 'K': 10, 'A' : 11}
-suits = ['clubs', 'diamonds', 'hearts', 'spades']
+suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
 
 class Deck(models.Model):
     cards = models.ManyToManyField(Card)
