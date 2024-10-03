@@ -35,6 +35,15 @@ def create_user(request):
   profile_serialized = ProfileSerializer(profile)
   return Response(profile_serialized.data)
 
+class ImageViewSet(viewsets.ReadOnlyModelViewSet):
+   queryset = Image.objects.all()
+   serializer_class = ImageSerializer
+   
+  #  def list(self, request):
+  #       images = Image.objects.all()
+  #       serializer = self.get_serializer(images, many=True)
+  #       return Response(serializer.data)
+
 class DeckViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Deck.objects.all()
     serializer_class = DeckSerializer
@@ -53,10 +62,17 @@ def get_decks(request):
    decks = int(request.query_params.get('deck_number', 1))
 
    for i in range(decks):
-      deck = Deck.objects.get(pk = 1)
+      deck = Deck.objects.get(pk = 25) #pk needs to be updated if decks are remade
       cards.extend(deck.cards.all())
 
    random.shuffle(cards)
 
    cards_serialized = CardSerializer(cards, many = True)
    return Response(cards_serialized.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_images(request):
+   images = Image.objects.all()
+   images_serialized = ImageSerializer(images, many=True)
+   return Response(images_serialized.data)
